@@ -64,7 +64,7 @@ const VideoCarousel = () => {
           if (progress != currentProgress) {
             currentProgress = progress;
 
-            console.log(videoDivRef);
+            // console.log(videoDivRef);
             // set the width of the progress bar
             gsap.to(videoDivRef.current[videoId], {
               width:
