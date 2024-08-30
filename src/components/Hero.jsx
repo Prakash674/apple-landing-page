@@ -24,12 +24,12 @@ const Hero = () => {
 
   useGSAP(() => {
     gsap.to("#hero", { opacity: 1, delay: 2 });
-    gsap.to("#cta", {
-      y: -50,
+    gsap.to(".buy-wrapper", {
       opacity: 1,
+      y: -50,
       delay: 2,
-      stagger: 2,
-      ease: "power3.in",
+      duration: 1,
+      stagger: 0.15,
     });
   }, []);
 
@@ -51,14 +51,16 @@ const Hero = () => {
           </video>
         </div>
       </div>
-      <div
-        id="cta"
-        className="flex flex-col items-center opacity-0 translate-y-20"
-      >
-        <a href="#highlights" className="btn">
+      <div id="cta" className="flex flex-col items-center ">
+        <a
+          href="#highlights"
+          className="btn opacity-0 translate-y-20 buy-wrapper"
+        >
           Buy
         </a>
-        <p className="font-normal text-xl">From $199/month or $999</p>
+        <p className="font-normal text-xl buy-wrapper opacity-0 translate-y-20">
+          From $199/month or $999
+        </p>
       </div>
     </section>
   );
