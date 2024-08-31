@@ -1,8 +1,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ModelView from "./ModelView";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { yellowImg } from "../utils";
+import { animateWithGsapTimeline } from "../utils/animations";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
@@ -31,12 +32,28 @@ const Model = () => {
   const [smallRotation, setSmallRotation] = useState(0);
   const [largeRotation, setLargeRotation] = useState(0);
 
+  const tl = gsap.timeline();
+
+  useEffect(() => {
+    if (size === "large") {
+      animateWithGsapTimeline(tl, small, smallRotation, "#view1", "#view2", {
+        transform: "translateX(-100%)",
+        duration: 2,
+      });
+    }
+
+    if (size === "small") {
+      animateWithGsapTimeline(tl, large, largeRotation, "#view2", "#view1", {
+        transform: "translateX(0)",
+        duration: 2,
+      });
+    }
+  }, [size]);
+
   useGSAP(() => {
-    gsap.to("#heading", {
-      y: 0,
-      opacity: 1,
-    });
-  });
+    gsap.to("#heading", { y: 0, opacity: 1 });
+  }, []);
+
   return (
     <section className="common-padding">
       <div className="screen-max-width">
@@ -54,6 +71,7 @@ const Model = () => {
               item={model}
               size={size}
             />
+
             <ModelView
               index={2}
               groupRef={large}
@@ -63,6 +81,7 @@ const Model = () => {
               item={model}
               size={size}
             />
+
             <Canvas
               className="w-full h-full"
               style={{
@@ -88,9 +107,7 @@ const Model = () => {
                     className="w-6 h-6 rounded-full mx-2 cursor-pointer"
                     style={{ backgroundColor: item.color[0] }}
                     onClick={() => setModel(item)}
-                  >
-                    {" "}
-                  </li>
+                  />
                 ))}
               </ul>
 
